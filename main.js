@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu, shell } = require('electron');
+// main.js
+const { app, BrowserWindow, Menu, shell, clipboard } = require('electron'); // <- add clipboard
 const path = require('path');
 
 let win;
@@ -96,6 +97,78 @@ if (!gotLock) {
 
     Menu.setApplicationMenu(menu);
     win.setMenuBarVisibility(false); // menu hidden, shortcuts still work
+
+win.webContents.on('context-menu', (_event, params) => {
+  const {
+    x, y,
+    linkURL,
+    srcURL,
+    selectionText,
+    isEditable,
+    editFlags,
+    misspelledWord,
+    dictionarySuggestions,
+  } = params;
+
+  const hasSelection = selectionText && selectionText.trim().length > 0;
+  const hasLink = linkURL && linkURL.length > 0;
+  const hasImage = srcURL && srcURL.length > 0;
+
+      // ---- Spellcheck suggestions (only show when right-clicking a misspelling) ----
+      const spellingItems = [];
+
+      if (misspelledWord && misspelledWord.length > 0) {
+        if (dictionarySuggestions && dictionarySuggestions.length > 0) {
+          // Show up to 8 suggestions to keep the menu sane
+          for (const suggestion of dictionarySuggestions.slice(0, 8)) {
+            spellingItems.push({
+              label: suggestion,
+              click: () => win.webContents.replaceMisspelling(suggestion),
+            });
+          }
+        } else {
+          spellingItems.push({
+            label: 'No suggestions',
+            enabled: false,
+          });
+        }
+
+        spellingItems.push(
+          { type: 'separator' },
+        );
+      }
+
+      const template = [
+        // Spellcheck suggestions go at the top when applicable
+        ...spellingItems,
+
+        { type: 'separator' },
+
+        // Text/edit actions
+        { label: 'Cut', role: 'cut', enabled: isEditable && editFlags.canCut },
+        { label: 'Copy', role: 'copy', enabled: hasSelection || editFlags.canCopy },
+        { label: 'Paste', role: 'paste', enabled: isEditable && editFlags.canPaste },
+        { label: 'Select All', role: 'selectAll' },
+
+        ...(hasSelection ? [
+          { type: 'separator' },
+        ] : []),
+
+        ...(hasLink ? [
+          { type: 'separator' },
+          {
+            label: 'Copy Link Address',
+            click: () => clipboard.writeText(linkURL),
+          },
+        ] : []),
+
+        ...(hasImage ? [
+          { type: 'separator' },
+        ] : []),
+      ];
+
+      Menu.buildFromTemplate(template).popup({ window: win, x, y });
+    });
 
     win.webContents.setWindowOpenHandler(({ url }) => {
       if (shouldOpenExternally(url)) {
