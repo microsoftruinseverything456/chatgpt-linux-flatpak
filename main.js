@@ -7,6 +7,8 @@ let win;
 const ALLOWED_HOSTS = [
   'chatgpt.com',
   'openai.com',
+  'sora.openai.com',
+  'sora.com',
   'auth.openai.com',
   'platform.openai.com',
   'help.openai.com',
