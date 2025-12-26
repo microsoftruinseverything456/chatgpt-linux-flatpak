@@ -189,7 +189,9 @@ build_flatpak() {
   preinstall_flatpak_refs_user "${ver}"
 
   rm -rf dist
-  npx electron-builder --linux flatpak
+
+  env TMPDIR="$HOME/tmp" DEBUG="@malept/flatpak-bundler" \
+    npx electron-builder --linux flatpak
 
   local FP_PATH=""
   FP_PATH="$(ls -1t dist/*.flatpak 2>/dev/null | head -n 1 || true)"
