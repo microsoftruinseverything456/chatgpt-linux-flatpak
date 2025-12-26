@@ -9,5 +9,5 @@ This version adds the following:
 - Allows for file drag and drop
 - Prevents multiple instances
 - Better support after remapping to a copilot key (requires manual mapping)
-- Opens non-sign in links in the defualt browser rather than internally
+- Opens non-sign in links in the default browser rather than internally
 - Resolves a couple of vulnerabilities
