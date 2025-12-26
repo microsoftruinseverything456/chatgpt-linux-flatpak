@@ -5,6 +5,7 @@ An improved fork of faisalkhanshah0's chatgpt-linux Snap package. The original c
 
 This version adds the following:
 - Translates it into a flatpak (or snap optionally)
+- Right click options and spell check
 - Adds ctrl+w to close
 - Allows for file drag and drop
 - Prevents multiple instances
