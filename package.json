@@ -1,0 +1,52 @@
+{
+  "name": "ChatGPT",
+  "version": "1.0.0",
+  "description": "Unofficial OpenAI ChatGPT for Linux",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "image": "npx electron-icon-builder --input=assets/icons/icon.png --output=assets/icons/build --flatten",
+    "build": "npx electron-builder",
+    "build-snap": "npx electron-builder --linux snap",
+    "build-deb": "npx electron-builder --linux deb"
+  },
+  "build": {
+    "appId": "com.llama.chatgpt",
+    "productName": "ChatGPT",
+    "icon": "assets/icons/build/icons/icon",
+    "linux": {
+      "target": [
+        "deb",
+        "snap",
+        "flatpak"
+      ],
+      "icon": "assets/icons/build/icons/512x512.png",
+      "category": "Utility"
+    },
+    "flatpak": {
+      "base": "org.electronjs.Electron2.BaseApp",
+      "baseVersion": "25.08",
+      "runtime": "org.freedesktop.Platform",
+      "runtimeVersion": "25.08",
+      "sdk": "org.freedesktop.Sdk"
+    },
+    "snap": {
+      "plugs": [
+        "network",
+        "desktop",
+        "desktop-legacy",
+        "browser-support",
+        "x11",
+        "wayland",
+        "opengl",
+        "home",
+        "removable-media"
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^37.4.0",
+    "electron-builder": "^26.0.12"
+  }
+}
