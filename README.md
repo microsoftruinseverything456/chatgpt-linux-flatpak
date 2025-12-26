@@ -11,3 +11,5 @@ This version adds the following:
 - Better support after remapping to a copilot key (requires manual mapping)
 - Opens non-sign in links in the default browser rather than internally
 - Resolves a couple of vulnerabilities
+
+This project is not affiliated in any way with OpenAI or any other company.
