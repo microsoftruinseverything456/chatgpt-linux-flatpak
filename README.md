@@ -4,7 +4,7 @@ Unofficial ChatGPT app for Linux
 An improved fork of faisalkhanshah0's chatgpt-linux Snap package. The original can be found here: https://github.com/faisalkhanshah0/chatgpt-linux.
 
 This version adds the following:
-- Translates it into a flatpak (or snap optionally)
+- Translates it into a Flatpak (or Snap optionally)
 - Right click options and spell check
 - Adds ctrl+w to close
 - Allows for file drag and drop
